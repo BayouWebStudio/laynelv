@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Changes - Layne Del Nostro | Texas Creative</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background shapes */
+        .shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #00ff88, #0088ff) 1;
+            opacity: 0.2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 15%;
+            transform: rotate(45deg);
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 60%;
+            right: 20%;
+            border-radius: 50%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 30%;
+            right: 10%;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(90deg); }
+            50% { transform: translateY(10px) rotate(180deg); }
+            75% { transform: translateY(-10px) rotate(270deg); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: clamp(3rem, 10vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #00ff88, #0088ff, #8800ff, #00ff88);
+            background-size: 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: #00ff88;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .header .description {
+            color: #0088ff;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid #00ff88;
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff88, #0088ff, #8800ff, #00ff88);
+            background-size: 400%;
+            border-radius: 32px;
+            z-index: -1;
+            animation: gradient 3s ease-in-out infinite;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0088ff;
+            background: rgba(0, 136, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 136, 255, 0.3);
+        }
+
+        .form-group select option {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input[type="file"] {
+            background: rgba(0, 255, 136, 0.2);
+            cursor: pointer;
+        }
+
+        .form-group input[type="file"]::-webkit-file-upload-button {
+            background: linear-gradient(45deg, #00ff88, #0088ff);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        /* Priority badges */
+        .priority-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .priority-option {
+            position: relative;
+        }
+
+        .priority-option input[type="radio"] {
+            display: none;
+        }
+
+        .priority-option label {
+            display: block;
+            padding: 15px 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .priority-option input[type="radio"]:checked + label {
+            background: linear-gradient(45deg, #00ff88, #0088ff);
+            border-color: #0088ff;
+            box-shadow: 0 10px 20px rgba(0, 136, 255, 0.3);
+            color: #0a0a0a;
+        }
+
+        .priority-option label:hover {
+            border-color: #0088ff;
+            background: rgba(0, 136, 255, 0.1);
+        }
+
+        /* Portfolio Update Section */
+        .portfolio-upload {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .portfolio-upload h3 {
+            color: #0088ff;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .portfolio-upload p {
+            font-size: 1.1rem;
+            color: #00ff88;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #0088ff, #00ff88);
+            color: #0a0a0a;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 136, 255, 0.4);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(45deg, #0088ff, #00ff88);
+            color: #0a0a0a;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 136, 255, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Back link */
+        .back-link {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-link a {
+            color: #00ff88;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #0088ff;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+            
+            .form-container {
+                padding: 30px 25px;
+            }
+
+            .priority-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="shapes" id="shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Request Changes</h1>
+            <div class="subtitle">Update Your Creative Website</div>
+            <div class="description">Need changes? Let's make it happen!</div>
+        </div>
+
+        <div class="form-container">
+            <form action="https://formsubmit.co/bayouwebstudio@gmail.com" method="POST" enctype="multipart/form-data">
+                <!-- Hidden Fields -->
+                <input type="hidden" name="_subject" value="Site Change Request — Layne Del Nostro">
+                <input type="hidden" name="site_name" value="Layne Del Nostro">
+                <input type="hidden" name="_next" value="https://bayouwebstudio.github.io/laynelv/">
+
+                <!-- Name Field -->
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <!-- What to Change Dropdown -->
+                <div class="form-group">
+                    <label for="change_type">What needs to change? *</label>
+                    <select id="change_type" name="change_type" required>
+                        <option value="">Select a change type</option>
+                        <option value="Update Portfolio">Update Portfolio</option>
+                        <option value="Change Content">Change Content</option>
+                        <option value="Update Contact Info">Update Contact Info</option>
+                        <option value="Add/Remove Services">Add/Remove Services</option>
+                        <option value="Social Media Links">Social Media Links</option>
+                        <option value="Bio/About Section">Bio/About Section</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="description">Detailed Description *</label>
+                    <textarea id="description" name="description" placeholder="Please describe exactly what you'd like changed. Be as specific as possible!" required></textarea>
+                </div>
+
+                <!-- Upload Images -->
+                <div class="form-group">
+                    <label for="images">Upload Images (optional)</label>
+                    <input type="file" id="images" name="images" accept="image/*" multiple>
+                </div>
+
+                <!-- Portfolio Update Section -->
+                <div class="portfolio-upload">
+                    <h3>🎨 Update Portfolio Content</h3>
+                    <p>To update your creative portfolio with new work, upload new content here:</p>
+                    <div class="portfolio-link">[Portfolio Upload Link Coming Soon]</div>
+                </div>
+
+                <!-- Priority -->
+                <div class="form-group">
+                    <label>Priority Level *</label>
+                    <div class="priority-options">
+                        <div class="priority-option">
+                            <input type="radio" id="no_rush" name="priority" value="No rush" required>
+                            <label for="no_rush">🎯 No Rush</label>
+                        </div>
+                        <div class="priority-option">
+                            <input type="radio" id="few_days" name="priority" value="Few days" required>
+                            <label for="few_days">⏰ Few Days</label>
+                        </div>
+                        <div class="priority-option">
+                            <input type="radio" id="asap" name="priority" value="ASAP" required>
+                            <label for="asap">🚀 ASAP</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">
+                    🚀 Submit Request
+                </button>
+            </form>
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">← Back to Layne's Website</a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize floating shapes animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add parallax effect to shapes
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const shapes = document.querySelectorAll('.shape');
+                
+                shapes.forEach((shape, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    shape.style.transform += ` translateY(${scrolled * speed}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
